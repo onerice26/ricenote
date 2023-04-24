@@ -23,6 +23,6 @@ import java.io.IOException;
 public class JwtAuthorizedEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        ResponseUtil.out(response, Result.error(ResultCode.USER_NOT_LOGIN));
+        ResponseUtil.out(response, Result.failed(ResultCode.USER_NOT_LOGIN));
     }
 }

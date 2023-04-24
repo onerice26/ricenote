@@ -33,27 +33,27 @@ public enum ResultCode {
     /* 业务错误 */
     NO_PERMISSION(3001, "没有权限");
     private Integer code;
-    private String msg;
+    private String message;
 
-    ResultCode(Integer code, String msg) {
+    ResultCode(Integer code, String message) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
     }
 
     public Integer getCode() {
         return code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
     public void setCode(Integer code) {
         this.code = code;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     /**
@@ -65,7 +65,7 @@ public enum ResultCode {
     public static String getMessageByCode(Integer code) {
         for (ResultCode ele : values()) {
             if (ele.getCode().equals(code)) {
-                return ele.getMsg();
+                return ele.getMessage();
             }
         }
         return null;

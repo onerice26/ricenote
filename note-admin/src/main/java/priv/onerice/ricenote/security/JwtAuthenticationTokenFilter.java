@@ -47,7 +47,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     }
                 }
             } catch (Throwable e) {
-                ResponseUtil.out(response, Result.error(ResultCode.USER_NOT_LOGIN));
+                ResponseUtil.out(response, Result.failed(ResultCode.USER_NOT_LOGIN));
                 return;
             }
         }

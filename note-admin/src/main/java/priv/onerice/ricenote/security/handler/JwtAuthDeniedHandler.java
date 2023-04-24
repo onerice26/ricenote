@@ -23,6 +23,6 @@ import java.io.IOException;
 public class JwtAuthDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
-        ResponseUtil.out(response, Result.error(ResultCode.NO_PERMISSION));
+        ResponseUtil.out(response, Result.failed(ResultCode.NO_PERMISSION));
     }
 }

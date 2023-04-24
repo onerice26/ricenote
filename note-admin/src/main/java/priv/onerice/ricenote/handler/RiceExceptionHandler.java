@@ -30,7 +30,7 @@ public class RiceExceptionHandler {
     @ResponseBody
     public Result bizExceptionHandler(HttpServletRequest req, RiceException e) {
         log.error("发生业务异常！原因是：{}", e.getMessage());
-        return Result.error(e.getErrorCode(), e.getErrorMsg());
+        return Result.failed(e.getErrorCode(), e.getErrorMsg());
     }
 
     /**
@@ -44,7 +44,7 @@ public class RiceExceptionHandler {
     @ResponseBody
     public Result exceptionHandler(HttpServletRequest req, NullPointerException e) {
         log.error("发生空指针异常！原因是:", e);
-        return Result.error(ResultCode.PARAMS_NULL_BODY);
+        return Result.failed(ResultCode.PARAMS_NULL_BODY);
     }
 
     /**
@@ -58,7 +58,7 @@ public class RiceExceptionHandler {
     @ResponseBody
     public Result exceptionHandler(HttpServletRequest req, NumberFormatException e) {
         log.error("发生类型转换异常！原因是:", e);
-        return Result.error(ResultCode.PARAMS_NOT_CONVERT);
+        return Result.failed(ResultCode.PARAMS_NOT_CONVERT);
     }
 
     /**
@@ -72,6 +72,6 @@ public class RiceExceptionHandler {
     @ResponseBody
     public Result exceptionHandler(HttpServletRequest req, Exception e) {
         log.error("未知异常！原因是:", e);
-        return Result.error(ResultCode.COMMON_FAIL);
+        return Result.failed(ResultCode.COMMON_FAIL);
     }
 }

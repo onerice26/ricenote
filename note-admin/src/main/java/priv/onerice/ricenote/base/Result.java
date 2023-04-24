@@ -25,7 +25,7 @@ public class Result<T> implements Serializable {
     /**
      * 响应消息
      */
-    private String msg;
+    private String message;
     /**
      * 响应结果
      */
@@ -34,36 +34,10 @@ public class Result<T> implements Serializable {
     public Result() {
     }
 
-    public Result(boolean success) {
-        this.success = success;
-        this.code = success ? ResultCode.SUCCESS.getCode() : ResultCode.COMMON_FAIL.getCode();
-        this.msg = success ? ResultCode.SUCCESS.getMsg() : ResultCode.COMMON_FAIL.getMsg();
-    }
-
-    public Result(boolean success, ResultCode resultEnum) {
-        this.success = success;
-        this.code = success ? ResultCode.SUCCESS.getCode() : (resultEnum == null ? ResultCode.COMMON_FAIL.getCode() : resultEnum.getCode());
-        this.msg = success ? ResultCode.SUCCESS.getMsg() : (resultEnum == null ? ResultCode.COMMON_FAIL.getMsg() : resultEnum.getMsg());
-    }
-
-    public Result(boolean success, T data) {
-        this.success = success;
-        this.code = success ? ResultCode.SUCCESS.getCode() : ResultCode.COMMON_FAIL.getCode();
-        this.msg = success ? ResultCode.SUCCESS.getMsg() : ResultCode.COMMON_FAIL.getMsg();
-        this.data = data;
-    }
-
-    public Result(boolean success, ResultCode resultEnum, T data) {
-        this.success = success;
-        this.code = success ? ResultCode.SUCCESS.getCode() : (resultEnum == null ? ResultCode.COMMON_FAIL.getCode() : resultEnum.getCode());
-        this.msg = success ? ResultCode.SUCCESS.getMsg() : (resultEnum == null ? ResultCode.COMMON_FAIL.getMsg() : resultEnum.getMsg());
-        this.data = data;
-    }
-
-    public Result(boolean success, Integer code, String msg, T data) {
+    public Result(boolean success, Integer code, String message, T data) {
         this.success = success;
         this.code = code;
-        this.msg = msg;
+        this.message = message;
         this.data = data;
     }
 
@@ -72,8 +46,17 @@ public class Result<T> implements Serializable {
      *
      * @return
      */
-    public static Result success() {
-        return new Result(true);
+    public static <T> Result<T> success() {
+        return new Result<T>(true, ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
+    }
+
+    /**
+     * 成功
+     *
+     * @return
+     */
+    public static <T> Result<T> success(T data) {
+        return new Result<T>(true, ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
     }
 
     /**
@@ -82,38 +65,51 @@ public class Result<T> implements Serializable {
      * @param data
      * @return
      */
-    public static Result success(Object data) {
-        return new Result(true, data);
+    public static <T> Result<T> success(String msg, T data) {
+        return new Result<T>(true, ResultCode.SUCCESS.getCode(), msg, data);
     }
 
     /**
      * 失败
      */
-    public static Result error() {
-        return new Result(false);
+    public static <T> Result<T> failed() {
+        return new Result<T>(false, ResultCode.COMMON_FAIL.getCode(), ResultCode.COMMON_FAIL.getMessage(), null);
     }
 
     /**
      * 失败
      */
-    public static Result error(String resultMessage) {
-        return new Result(false, 999, resultMessage, null);
+    public static <T> Result<T> failed(String message) {
+        return new Result<T>(false, ResultCode.COMMON_FAIL.getCode(), message, null);
     }
 
     /**
      * 失败
      */
-    public static Result error(ResultCode resultCode) {
-        return new Result(false, resultCode);
+    public static <T> Result<T> failed(ResultCode errorCode) {
+        return new Result<T>(false, errorCode.getCode(), errorCode.getMessage(), null);
     }
 
     /**
      * 失败
      */
-    public static Result error(Integer resultCode, String resultMessage) {
-        return new Result(false, resultCode, resultMessage, null);
+    public static <T> Result<T> failed(Integer errorCode, String message) {
+        return new Result<T>(false, errorCode, message, null);
     }
 
+    /**
+     * 未登录返回结果
+     */
+    public static <T> Result<T> unauthorized(T data) {
+        return new Result<T>(false, ResultCode.USER_NOT_LOGIN.getCode(), ResultCode.USER_NOT_LOGIN.getMessage(), data);
+    }
+
+    /**
+     * 未授权返回结果
+     */
+    public static <T> Result<T> forbidden(T data) {
+        return new Result<T>(false, ResultCode.NO_PERMISSION.getCode(), ResultCode.NO_PERMISSION.getMessage(), data);
+    }
 
     @Override
     public String toString() {

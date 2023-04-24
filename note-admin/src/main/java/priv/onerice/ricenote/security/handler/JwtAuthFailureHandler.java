@@ -20,6 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtAuthFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) {
-        ResponseUtil.out(response, Result.error(exception.getMessage()));
+        ResponseUtil.out(response, Result.failed(exception.getMessage()));
     }
 }
