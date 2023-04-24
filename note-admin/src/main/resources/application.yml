@@ -1,0 +1,99 @@
+server:
+  port: 8080
+spring:
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        login-password: 123456
+        login-username: root
+      web-stat-filter:
+        enabled: true
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        master:
+          url: jdbc:mysql://localhost:3306/rice_note?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true&autoReconnect=true
+          username: root
+          password: root123
+          driver-class-name: com.mysql.cj.jdbc.Driver
+      druid:
+        initial-size: 5
+        max-active: 200
+        min-idle: 5
+        max-wait: 6000 # 链接超时时间
+        time-between-eviction-runs-millis: 6000 #间隔多久进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        # 一个连接在连接池中最小的生存时间，单位是毫秒
+        min-evictable-idle-time-millis: 120000
+        # 用来检测连接是否有效的sql，要求是一个查询语句。 如果validationQuery为null，testOnBorrow、testOnReturn、 testWhileIdle都不会其作用。
+        validation-query: SELECT 1
+        # 当从连接池借用连接时，是否测试该连接
+        test-on-borrow: false
+        # 在连接归还到连接池时是否测试该连接
+        test-on-return: false
+        # 当连接空闲时，是否执行连接测试
+        test-while-idle: true
+        # 是否缓存preparedStatement，也就是PSCache。 PSCache对支持游标的数据库性能提升巨大，比如说oracle。 在mysql5.5以下的版本中没有PSCache功能，建议关闭掉
+        pool-prepared-statements: true
+        # 要启用PSCache，必须配置大于0，当大于0时， poolPreparedStatements自动触发修改为true。 在Druid中，不会存在Oracle下PSCache占用内存过多的问题， 可以把这个数值配置大一些，比如说100
+        max-pool-prepared-statement-per-connection-size: 100
+        # 合并多个DruidDataSource的监控数据
+        use-global-data-source-stat: true
+        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        filter:
+          # 慢SQL记录(sql语句执行时间超过某个界限就记录下来)
+          stat:
+            log-slow-sql: true
+            slow-sql-millis: 2000
+        #        wall:
+        #          config:
+        #            none-base-statement-allow: true
+        #            multi-statement-allow: true
+        # 本来有防火墙的过滤器的，但批量更新总是过不去，就去掉了，加防火墙怎么实现批量更新？还没解决
+        filters: stat
+        #  监控配置
+        # WebStatFilter配置
+        web-stat-filter:
+          # 是否开启web-jdbc监控 默认是false
+          enabled: true
+          # 是否开启单个监控url调用的sql列表 默认开启
+          profile-enable: true
+          url-pattern: /*
+          exclusions: /druid/*,*.gif,*.png,*.jpg,*.html,*.js,*.css,*.ico
+          # 是否开启session统计 默认false
+          session-stat-enable: true
+          # 设置session统计的最大值 默认是1000
+          session-stat-max-count: 1000
+
+        # StatViewServlet配置
+        stat-view-servlet:
+          # 是否开启druid的数据统计界面 默认false
+          enabled: true
+          url-pattern: /druid/*
+          #  登录监控界面的用户名以及密码，登录url为 IP:port/druid
+          login-username: druid
+          login-password: 123
+          allow:
+          deny:
+          #  HTML页面上的“Reset All”功能
+          reset-enable: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 000415
+# mybatis
+mybatis-plus:
+  type-aliases-package: com.onerice.ricenote.core.entity
+  # 指定mybatis映射文件的位置
+  mapper-locations: classpath:priv/onerice/ricenote/core/mapper/xml/*Mapper.xml
+  configuration:
+    # 开启驼峰命名转换（开启后需要注意字段写法，不然返回值为null）
+    map-underscore-to-camel-case: true
+    # 配置mybatis日志输出
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: AUTO

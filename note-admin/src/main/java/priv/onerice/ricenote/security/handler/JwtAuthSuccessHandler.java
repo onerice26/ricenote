@@ -1,0 +1,32 @@
+package priv.onerice.ricenote.security.handler;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+import priv.onerice.ricenote.base.Result;
+import priv.onerice.ricenote.handler.ex.ResultCode;
+import priv.onerice.ricenote.security.JwtTokenUtil;
+import priv.onerice.ricenote.utils.ResponseUtil;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * @author onerice
+ * @date 2023/4/22
+ * @apiNote
+ */
+@Component
+@Slf4j
+public class JwtAuthSuccessHandler implements AuthenticationSuccessHandler {
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth) throws IOException, ServletException {
+        String token = JwtTokenUtil.createToken(auth.getName());
+        response.setHeader(JwtTokenUtil.getAuthorization(), token);
+        ResponseUtil.out(response, Result.error(ResultCode.SUCCESS));
+    }
+}

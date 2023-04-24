@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - predicates:
+        - Path =/gateway/** #匹配规则
+        uri: http://localhost:8099/getUser  #服务1的访问地址
+        filters:
+        - StripRrefix: 1 #去掉前缀
+server:
+  port: 8077
