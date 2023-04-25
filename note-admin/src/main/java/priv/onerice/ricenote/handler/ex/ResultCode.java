@@ -20,6 +20,7 @@ public enum ResultCode {
     PARAMS_NULL_BODY(1006, "参数类型转换异常"),
 
     // 用户错误
+    USER_NOT_TOKEN(2000, "token失效"),
     USER_NOT_LOGIN(2001, "用户未登录"),
     USER_ACCOUNT_EXPIRED(2002, "账号已过期"),
     USER_CREDENTIALS_ERROR(2003, "密码错误"),

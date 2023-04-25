@@ -18,7 +18,7 @@ spring:
         master:
           url: jdbc:mysql://localhost:3306/rice_note?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true&autoReconnect=true
           username: root
-          password: root
+          password: root123
           driver-class-name: com.mysql.cj.jdbc.Driver
       druid:
         initial-size: 5
@@ -83,10 +83,11 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-    password: Redis000
+    password: '000415' # Redis000
+    connect-timeout: 5000
 # mybatis
 mybatis-plus:
-  type-aliases-package: com.onerice.ricenote.core.entity
+  type-aliases-package: priv.onerice.ricenote.core.entity
   # 指定mybatis映射文件的位置
   mapper-locations: classpath:priv/onerice/ricenote/core/mapper/xml/*Mapper.xml
   configuration:

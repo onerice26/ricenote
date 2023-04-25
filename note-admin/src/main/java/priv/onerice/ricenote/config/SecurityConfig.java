@@ -2,7 +2,6 @@ package priv.onerice.ricenote.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,8 +9,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import priv.onerice.ricenote.security.JwtAuthenticationDetailsSource;
+import priv.onerice.ricenote.security.JwtAuthenticationEncoder;
 import priv.onerice.ricenote.security.JwtAuthenticationTokenFilter;
 import priv.onerice.ricenote.security.JwtUserDetailsService;
 import priv.onerice.ricenote.security.handler.*;
@@ -42,9 +42,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
+    @Autowired
+    private JwtAuthenticationDetailsSource jwtAuthenticationDetailsSource;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.authenticationProvider(new JwtAuthenticationEncoder(userDetailsService));
     }
 
     @Override
@@ -55,9 +59,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          * * 匹配0或者任意数量的字符，不包含"/"
          * ** 匹配0或者更多的目录，包含"/"
          */
-        http
-                .headers()
-                .frameOptions().disable();
+//        http
+//                .headers()
+//                .frameOptions().disable();
 
         http
                 //登录后,访问没有权限处理类
@@ -80,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 //配置登录,检测到用户未登录时跳转的url地址,登录放行
                 .formLogin()
+                .authenticationDetailsSource(jwtAuthenticationDetailsSource)
                 //需要跟前端表单的action地址一致
                 .loginProcessingUrl("/login")
                 .successHandler(successHandler)
@@ -89,10 +94,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //配置取消session管理,又Jwt来获取用户状态,否则即使token无效,也会有session信息,依旧判断用户为登录状态
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
                 //配置登出,登出放行
                 .and()
                 .logout()
+                .logoutUrl("/logout")
                 .logoutSuccessHandler(logoutHandler)
                 .permitAll()
 
@@ -100,10 +105,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
     }
 
-    @Bean
+   /* @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    }*/
 
     @Override
     public void configure(WebSecurity web) throws Exception {

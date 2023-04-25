@@ -15,7 +15,7 @@ import java.util.Date;
 public class JwtTokenUtil {
 
     private static long expire = 604800;// 七天
-    private static String signKey = "3c8bdf976f3c30bd9467cb2d7835a1d2";
+    private static String signKey = "3c8bdf976f3c30bd9467cb2d7835a1d2589404905DF3E7BE192966710D5038B5FFE0ADDEB61402E9225B0A28F00A66D8";
     private static String authorization = "Authorization";
 
     public static String createToken(String userName) {
@@ -35,6 +35,10 @@ public class JwtTokenUtil {
 
     public static String getAuthorization() {
         return authorization;
+    }
+
+    public static long getExpire() {
+        return expire;
     }
 
     /**

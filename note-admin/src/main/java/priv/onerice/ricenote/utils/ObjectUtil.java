@@ -32,4 +32,8 @@ public class ObjectUtil {
             return object instanceof Map ? ((Map) object).isEmpty() : false;
         }
     }
+
+    public static boolean isNotEmpty(Object object) {
+        return !isEmpty(object);
+    }
 }
