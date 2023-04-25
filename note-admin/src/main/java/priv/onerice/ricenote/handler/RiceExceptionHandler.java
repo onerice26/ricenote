@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import priv.onerice.ricenote.base.Result;
-import priv.onerice.ricenote.handler.ex.ResultCode;
+import priv.onerice.ricenote.base.ResultCode;
 import priv.onerice.ricenote.handler.ex.RiceException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +29,7 @@ public class RiceExceptionHandler {
     @ExceptionHandler(value = RiceException.class)
     @ResponseBody
     public Result bizExceptionHandler(HttpServletRequest req, RiceException e) {
-        log.error("发生业务异常！原因是：{}", e.getMessage());
+        log.error("发生业务异常！原因是：{}", e.getErrorMsg());
         return Result.failed(e.getErrorCode(), e.getErrorMsg());
     }
 

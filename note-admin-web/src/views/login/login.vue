@@ -3,19 +3,22 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { ref, reactive, computed } from 'vue'
 
 import { userStore } from '@/stores/user'
+import { commStore } from '@/stores/comm'
 import { loginRules } from './conf'
 
 const store = userStore()
+const comm = commStore()
 
 // 响应式数据
 const formRef = ref()
 const formData = reactive({
-  username: 'admin',
-  password: '123456'
+  account: '',
+  password: '',
+  captcha: ''
 })
 // 计算属性 登录按钮是否可以点击
 const disabled = computed(() => {
-  return !(formData.username && formData.password)
+  return !(formData.account && formData.password)
 })
 
 // 事件
@@ -23,6 +26,7 @@ const submitForm = (formEl) => {
   if (!formEl) return
   formEl.validate().then(() => store.loginAction(formData))
 }
+const captchaUrl = comm.refreshCaptcha();
 </script>
 
 <template>
@@ -31,8 +35,8 @@ const submitForm = (formEl) => {
       <h1>Mini RBAC</h1>
 
       <a-form ref="formRef" :model="formData" :rules="loginRules">
-        <a-form-item has-feedback name="username">
-          <a-input v-model:value.trim="formData.username" placeholder="Username">
+        <a-form-item has-feedback name="account">
+          <a-input v-model:value.trim="formData.account" placeholder="请输入用户名">
             <template #prefix>
               <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
             </template>
@@ -41,13 +45,27 @@ const submitForm = (formEl) => {
         <a-form-item has-feedback name="password">
           <a-input-password
             v-model:value.trim="formData.password"
-            placeholder="Password"
+            placeholder="请输入密码"
             autocomplete="on"
           >
             <template #prefix>
               <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
             </template>
           </a-input-password>
+        </a-form-item>
+        <a-form-item>
+                        <el-input
+                            class="yzminput"
+                            v-model="formData.captcha"
+                            placeholder="验证码, 单击图片刷新"
+                        ></el-input>
+          <img
+                            class="yzm"
+                            :src="captchaUrl"
+                            alt="验证码"
+                            style="width: 65px; height: 35px"
+                            @click="getCaptcha"
+                        />
         </a-form-item>
         <a-form-item>
           <a-button
@@ -84,5 +102,14 @@ const submitForm = (formEl) => {
 }
 .continer .ant-btn {
   width: 100%;
+}
+.yzm {
+    margin-top: 4px;
+    margin-right: 12px;
+    float: left;
+}
+
+.yzminput {
+    width: 165px;
 }
 </style>

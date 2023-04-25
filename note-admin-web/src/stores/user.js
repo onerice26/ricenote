@@ -1,10 +1,10 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
-import { message } from 'ant-design-vue'
-
 import router from '@/router'
-import { loadRouter, getPermissions } from '@/utils/loadCpn'
 import { getMenus, getUserInfo, login, selectRole } from '@/service/user'
+import { getPermissions, loadRouter } from '@/utils/loadCpn'
+import { message } from 'ant-design-vue'
+import { defineStore } from 'pinia'
+import { Md5 } from 'ts-md5'
+import { computed, ref } from 'vue'
 
 export const userStore = defineStore(
   'user',
@@ -64,8 +64,13 @@ export const userStore = defineStore(
     }
 
     const loginAction = async (data) => {
+      // 密码加密
+      const info = {
+        "account": data.account
+      }
+      info.password = Md5.hashStr(data.account+data.password)
       // 1. 登录
-      const res = await login(data)
+      const res = await login(info)
       token.value = res.data.token
       await getUserData(res.data.id)
       // 弹框提示登录成功

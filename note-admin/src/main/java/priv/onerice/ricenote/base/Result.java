@@ -1,6 +1,5 @@
 package priv.onerice.ricenote.base;
 
-import priv.onerice.ricenote.handler.ex.ResultCode;
 import lombok.Data;
 import com.alibaba.fastjson.JSONObject;
 

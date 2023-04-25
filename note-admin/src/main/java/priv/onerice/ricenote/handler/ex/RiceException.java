@@ -1,6 +1,7 @@
 package priv.onerice.ricenote.handler.ex;
 
 import lombok.Getter;
+import priv.onerice.ricenote.base.ResultCode;
 
 /**
  * @author onerice
@@ -28,5 +29,10 @@ public class RiceException extends RuntimeException {
     public RiceException(String errorMsg) {
         this.errorCode = ResultCode.COMMON_FAIL.getCode();
         this.errorMsg = errorMsg;
+    }
+
+    public RiceException(ResultCode resultCode) {
+        this.errorCode = resultCode.getCode();
+        this.errorMsg = resultCode.getMessage();
     }
 }

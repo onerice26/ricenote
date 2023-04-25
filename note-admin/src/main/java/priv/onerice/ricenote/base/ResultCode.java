@@ -1,4 +1,4 @@
-package priv.onerice.ricenote.handler.ex;
+package priv.onerice.ricenote.base;
 
 /**
  * @author onerice

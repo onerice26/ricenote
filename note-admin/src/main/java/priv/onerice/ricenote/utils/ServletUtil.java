@@ -1,6 +1,7 @@
 package priv.onerice.ricenote.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import priv.onerice.ricenote.base.Result;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,18 @@ public class ServletUtil {
         response.setHeader("Access-Control-Allow-Headers", "token, Accept, Origin, X-Requested-With, Content-Type, Last-Modified");
         response.setHeader("Content-type", "application/json;charset=UTF-8");
         JSONObject.writeJSONString(response.getOutputStream(), object);
-        //response.getWriter().print(JSONUtil.toJsonStr(object));
+    }
+
+    public static String getToken(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (StringUtils.isEmpty(token)) {
+            token = request.getParameter("Authorization");
+        }
+        if (StringUtils.isNotEmpty(token)) {
+            /*if (!token.startsWith("onerice")) {
+                throw new RiceException(ResultCode.USER_NOT_TOKEN);
+            }*/
+        }
+        return token;
     }
 }
