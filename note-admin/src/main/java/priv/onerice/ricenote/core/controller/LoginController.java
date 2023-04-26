@@ -4,16 +4,18 @@ import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import priv.onerice.ricenote.base.Result;
+import priv.onerice.ricenote.base.ResultCode;
 import priv.onerice.ricenote.base.RiceConst;
 import priv.onerice.ricenote.core.entity.SysUser;
 import priv.onerice.ricenote.core.service.ISysUserService;
-import priv.onerice.ricenote.base.ResultCode;
 import priv.onerice.ricenote.handler.ex.RiceException;
 import priv.onerice.ricenote.utils.PasswordUtil;
 import priv.onerice.ricenote.utils.RedisUtil;
@@ -29,12 +31,14 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @RestController
+@Api(tags = "用户登录")
 public class LoginController {
 
     @Autowired
     private ISysUserService userService;
 
     @PostMapping("/login")
+    @ApiOperation(value = "登录", notes = "登录")
     public Result login(String account, String password, String captcha) {
         if (StringUtils.isBlank(account)
                 || StringUtils.isBlank(password)) {
@@ -67,6 +71,7 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
+    @ApiOperation(value = "退出", notes = "退出")
     public Result logout(HttpServletRequest request) {
         String token = ServletUtil.getToken(request);
         if (StringUtils.isBlank(token)) {
@@ -82,6 +87,7 @@ public class LoginController {
     }
 
     @GetMapping("/captcha")
+    @ApiOperation(value = "图形验证码", notes = "图形验证码")
     public void Captcha(HttpServletResponse response) {
         try (ServletOutputStream outputStream = response.getOutputStream()) {
             CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(100, 38, 4, 20);

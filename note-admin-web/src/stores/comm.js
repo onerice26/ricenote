@@ -8,7 +8,7 @@ export const commStore = defineStore(
     // 切换角色
     const refreshCaptcha = async () => {
       // 重新拿用户信息
-      return await getCaptcha()
+      getCaptcha().then((res) => (dataSource.value = res.data))
     }
 
     return {

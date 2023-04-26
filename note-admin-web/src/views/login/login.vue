@@ -3,11 +3,13 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { ref, reactive, computed } from 'vue'
 
 import { userStore } from '@/stores/user'
-import { commStore } from '@/stores/comm'
+import { getCaptcha } from '@/service/comm'
 import { loginRules } from './conf'
 
+// onMounted(() => {
+//   refreshCode
+// })
 const store = userStore()
-const comm = commStore()
 
 // 响应式数据
 const formRef = ref()
@@ -26,7 +28,16 @@ const submitForm = (formEl) => {
   if (!formEl) return
   formEl.validate().then(() => store.loginAction(formData))
 }
-const captchaUrl = comm.refreshCaptcha();
+const captchaUrl = ref();
+/**
+ * 点击刷新
+ */
+const refreshCode =  () => {
+  getCaptcha().then((res) => {
+  const imgg =  new window.Blob([res.data],{type:'png'})
+  captchaUrl.value = window.URL.createObjectURL(imgg)
+    })
+}
 </script>
 
 <template>
@@ -53,18 +64,21 @@ const captchaUrl = comm.refreshCaptcha();
             </template>
           </a-input-password>
         </a-form-item>
-        <a-form-item>
-                        <el-input
+        <a-form-item has-feedback name="captcha">
+                        <a-input
                             class="yzminput"
-                            v-model="formData.captcha"
+                            v-model:value.trim="formData.captcha"
                             placeholder="验证码, 单击图片刷新"
-                        ></el-input>
+                        >
+                        <template #prefix>
+              <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
+            </template></a-input>
           <img
                             class="yzm"
                             :src="captchaUrl"
                             alt="验证码"
                             style="width: 65px; height: 35px"
-                            @click="getCaptcha"
+                            @click="refreshCode"
                         />
         </a-form-item>
         <a-form-item>
@@ -106,10 +120,11 @@ const captchaUrl = comm.refreshCaptcha();
 .yzm {
     margin-top: 4px;
     margin-right: 12px;
-    float: left;
+    float: right;
 }
 
 .yzminput {
-    width: 165px;
+    width: 60%;
+    float: left;
 }
 </style>

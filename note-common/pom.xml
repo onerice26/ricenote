@@ -18,10 +18,15 @@
         <lombok.version>1.18.4</lombok.version>
         <hutool-all.version>5.8.15</hutool-all.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <knife4j.version>4.1.0</knife4j.version>
+        <knife4j.version>3.0.3</knife4j.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -47,7 +52,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
         </dependency>
     </dependencies>
