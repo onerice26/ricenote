@@ -10,10 +10,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import priv.onerice.ricenote.base.Result;
 import priv.onerice.ricenote.base.ResultCode;
 import priv.onerice.ricenote.base.RiceConst;
+import priv.onerice.ricenote.base.vo.LoginUserVo;
 import priv.onerice.ricenote.core.entity.SysUser;
 import priv.onerice.ricenote.core.service.ISysUserService;
 import priv.onerice.ricenote.handler.ex.RiceException;
@@ -39,35 +41,38 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperation(value = "登录", notes = "登录")
-    public Result login(String account, String password, String captcha) {
-        if (StringUtils.isBlank(account)
-                || StringUtils.isBlank(password)) {
+    public Result login(@RequestBody LoginUserVo userVo) {
+        if (Objects.isNull(userVo)) {
             return Result.failed(ResultCode.PARAM_IS_BLANK.getCode(), "账号或密码为空");
         }
-        if (StringUtils.isBlank(captcha)) {
+        if (StringUtils.isBlank(userVo.getAccount())
+                || StringUtils.isBlank(userVo.getPassword())) {
+            return Result.failed(ResultCode.PARAM_IS_BLANK.getCode(), "账号或密码为空");
+        }
+        if (StringUtils.isBlank(userVo.getCaptcha())) {
             return Result.failed(ResultCode.PARAM_IS_BLANK.getCode(), "验证码为空");
         }
-        String capt = RedisUtil.get(RiceConst.BUSINESS_LOGIN_CAPTCHA + ":" + captcha);
-        if (!StringUtils.equals(capt, captcha)) {
+        String capt = RedisUtil.get(RiceConst.BUSINESS_LOGIN_CAPTCHA + ":" + userVo.getCaptcha());
+        if (!StringUtils.equals(capt, userVo.getCaptcha())) {
             return Result.failed(ResultCode.PARAM_IS_BLANK.getCode(), "验证码不正确");
         }
-        SysUser sysUser = userService.getUserByName(account);
+        SysUser sysUser = userService.getUserByName(userVo.getAccount());
         if (Objects.isNull(sysUser)) {
             return Result.failed(ResultCode.USER_ACCOUNT_PASSWORD_ERROE);
         }
         // 加密匹配
-        String encrypt = SaSecureUtil.md5BySalt(password, sysUser.getSalt());
+        String encrypt = SaSecureUtil.md5BySalt(userVo.getPassword(), sysUser.getSalt());
         String encrypt1 = PasswordUtil.decrypt(sysUser.getPassword());
         if (!StringUtils.equals(encrypt1, encrypt)) {
             return Result.failed(ResultCode.USER_ACCOUNT_PASSWORD_ERROE);
         }
         StpUtil.login(sysUser.getId());
         String token = StpUtil.getTokenValue();
-        RedisUtil.delete(RiceConst.BUSINESS_LOGIN_CAPTCHA + ":" + captcha);
+        RedisUtil.delete(RiceConst.BUSINESS_LOGIN_CAPTCHA + ":" + userVo.getCaptcha());
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
         map.put("id", sysUser.getId());
-        return Result.success("登录成功", token);
+        return Result.success("登录成功", map);
     }
 
     @PostMapping("/logout")

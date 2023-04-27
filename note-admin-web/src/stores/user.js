@@ -66,13 +66,15 @@ export const userStore = defineStore(
     const loginAction = async (data) => {
       // 密码加密
       const info = {
-        "account": data.account
+        "account": data.account,
+        "captcha": data.captcha
       }
-      info.password = Md5.hashStr(data.account+data.password)
+      info.password = Md5.hashStr(data.account+"&"+data.password)
+      console.log(111)
       // 1. 登录
       const res = await login(info)
-      token.value = res.data.token
-      await getUserData(res.data.id)
+      token.value = res.token
+      await getUserData(res.id)
       // 弹框提示登录成功
       message.success('登录成功.')
     }

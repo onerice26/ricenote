@@ -25,7 +25,8 @@ public class PasswordUtil {
     public static void main(String[] args) throws Exception {
         /*Map<String, String> map = SaSecureUtil.rsaGenerateKeyPair();
         System.out.println(map);*/
-        String s = SaSecureUtil.md5BySalt("18483223986" + "8a2149b5f1339962b17a0a29b7e7d269", "m7tY12WsYD");
+        String s1 = SaSecureUtil.md5("18483223986&123456");
+        String s = SaSecureUtil.md5BySalt(s1, "m7tY12WsYD");
         String encrypt = encrypt(s);
         System.out.println(encrypt);
         System.out.println(decrypt(encrypt));

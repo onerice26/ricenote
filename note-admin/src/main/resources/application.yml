@@ -125,22 +125,3 @@ sa-token:
   is-log: false
   # jwt-key
   jwt-secret-key: 3c8bdf976f3c30bd9467cb2d7835a1d2589404905DF3E7BE192966710D5038B5FFE0ADDEB61402E9225B0A28F00A66D8
-
-# springdoc-openapi项目配置
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    path: /v3/api-docs
-  group-configs:
-    - group: 'default'
-      paths-to-match: '/**'
-      packages-to-scan: priv.onerice.ricenote
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn
-    footer-custom-content: Apache License 2.0 | Copyright  2023-[一粒米:onerice]

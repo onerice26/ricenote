@@ -4,6 +4,9 @@ export function login(data) {
   return request({
     url: '/login',
     method: 'post',
+    headers: {
+      'Conent-Type': 'application/x-www-form-urlencoded',
+    },
     data
   })
 }

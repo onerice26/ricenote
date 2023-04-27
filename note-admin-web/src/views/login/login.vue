@@ -1,14 +1,13 @@
 <script setup>
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed,onMounted } from 'vue'
 
 import { userStore } from '@/stores/user'
-import { getCaptcha } from '@/service/comm'
 import { loginRules } from './conf'
 
-// onMounted(() => {
-//   refreshCode
-// })
+onMounted(() => {
+  refreshCode()
+})
 const store = userStore()
 
 // 响应式数据
@@ -33,10 +32,7 @@ const captchaUrl = ref();
  * 点击刷新
  */
 const refreshCode =  () => {
-  getCaptcha().then((res) => {
-  const imgg =  new window.Blob([res.data],{type:'png'})
-  captchaUrl.value = window.URL.createObjectURL(imgg)
-    })
+  captchaUrl.value = import.meta.env.VITE_BASE_URL+ "/captcha?t=" + new Date().getTime();
 }
 </script>
 
