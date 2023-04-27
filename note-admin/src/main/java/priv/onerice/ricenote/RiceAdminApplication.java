@@ -18,7 +18,7 @@ import java.net.UnknownHostException;
  */
 @Slf4j
 @SpringBootApplication
-@MapperScan("priv.onerice.ricenote.core.mapper")
+@MapperScan("priv.onerice.ricenote.*.mapper")
 public class RiceAdminApplication {
     public static void main(String[] args) throws UnknownHostException {
         ConfigurableApplicationContext application = SpringApplication.run(RiceAdminApplication.class, args);

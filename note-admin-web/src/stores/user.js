@@ -70,6 +70,7 @@ export const userStore = defineStore(
       await getUserData(res.id)
       // 弹框提示登录成功
       message.success('登录成功.')
+      router.push('/main')
     }
 
     // loadRouter 刷新问题

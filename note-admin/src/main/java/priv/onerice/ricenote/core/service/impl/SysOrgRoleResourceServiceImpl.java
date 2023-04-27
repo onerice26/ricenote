@@ -1,12 +1,12 @@
 package priv.onerice.ricenote.core.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import priv.onerice.ricenote.core.entity.SysOrgRoleResource;
 import priv.onerice.ricenote.core.entity.SysResource;
 import priv.onerice.ricenote.core.mapper.SysOrgRoleResourceMapper;
 import priv.onerice.ricenote.core.service.ISysOrgRoleResourceService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;

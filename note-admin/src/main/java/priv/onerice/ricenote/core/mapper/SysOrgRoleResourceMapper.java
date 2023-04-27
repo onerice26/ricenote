@@ -1,5 +1,6 @@
 package priv.onerice.ricenote.core.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import priv.onerice.ricenote.core.entity.SysOrgRoleResource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import priv.onerice.ricenote.core.entity.SysResource;
@@ -18,8 +19,9 @@ public interface SysOrgRoleResourceMapper extends BaseMapper<SysOrgRoleResource>
 
     /**
      * 通过角色IDS查询菜单信息
+     *
      * @param roles 角色IDS
      * @return SysOrgRoleResource
      */
-    List<SysResource> getResourcesByRoles(List<String> roles);
+    List<SysResource> getResourcesByRoles(@Param("roles") List<String> roles);
 }

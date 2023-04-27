@@ -46,8 +46,8 @@ public class SysUserOrgRoleServiceImpl extends ServiceImpl<SysUserOrgRoleMapper,
         }
         List<SysUserOrgRole> roles = getOrgRoleByUserId(userId);// 用户所有角色
         List<String> roleIds = roles.stream().map(SysUserOrgRole::getRoleId).collect(Collectors.toList());
-        List<SysOrgRole> orgRoles = orgRoleService.getRoleByOrgId(userId); // 用户所有组织
-        List<SysOrgRole> orgRole = orgRoles.stream().filter(ie -> ie.getOrgId().equals(orgId)).collect(Collectors.toList());
-        return orgRole.stream().filter(ie -> roleIds.contains(ie.getId())).collect(Collectors.toList());
+        List<SysOrgRole> orgRoles = orgRoleService.getRoleByOrgId(orgId); // 用户所有组织
+        //List<SysOrgRole> orgRole = orgRoles.stream().filter(ie -> ie.getOrgId().equals(orgId)).collect(Collectors.toList());
+        return orgRoles.stream().filter(ie -> roleIds.contains(ie.getId())).collect(Collectors.toList());
     }
 }
