@@ -1,6 +1,6 @@
 import router from '@/router'
-import { getMenus, getUserInfo, login, selectRole } from '@/service/user'
-import { getPermissions, loadRouter } from '@/utils/loadCpn'
+import { getUserInfo, login, selectRole } from '@/service/user'
+import { loadRouter } from '@/utils/loadCpn'
 import { message } from 'ant-design-vue'
 import { defineStore } from 'pinia'
 import { Md5 } from 'ts-md5'
@@ -39,28 +39,21 @@ export const userStore = defineStore(
     const getUserData = async (uid) => {
       // 2. 获取用户信息
       const info = await getUserInfo(uid)
-      userInfo.value = info.data
-
-      // 3. 获取权限信息
-      const menus = await getMenus(info.data.roles[0].id)
-      userMenus.value = menus.data
+      userInfo.value = info.userInfo
 
       // 3.1 加载路由权限
-      loadRouter(menus.data)
-
-      // 3.2 加载按钮权限
-      const [btnPermissions, firstMenu] = getPermissions(menus.data)
-      permissions.value = btnPermissions
+      loadRouter(info.roleList)
 
       // 3.2 默认打开菜单
-      selectKey.value = [firstMenu.id]
+      // selectKey.value = [firstMenu.id]
 
       // 4. 跳转路由
-      if (firstMenu?.path) {
-        router.push(firstMenu.path)
-      } else {
-        router.push('/main')
-      }
+      // if (firstMenu?.path) {
+      //   router.push(firstMenu.path)
+      // } else {
+      //   router.push('/main')
+      // }
+      router.push('/main')
     }
 
     const loginAction = async (data) => {

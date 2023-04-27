@@ -1,9 +1,10 @@
 package priv.onerice.ricenote.core.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -33,5 +34,5 @@ public class SysOrgPermission implements Serializable {
     /**
      * 权限ID
      */
-    private String permissionsId;
+    private String permissionId;
 }

@@ -2,6 +2,9 @@ package priv.onerice.ricenote.core.mapper;
 
 import priv.onerice.ricenote.core.entity.SysOrgRoleResource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import priv.onerice.ricenote.core.entity.SysResource;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysOrgRoleResourceMapper extends BaseMapper<SysOrgRoleResource> {
 
+    /**
+     * 通过角色IDS查询菜单信息
+     * @param roles 角色IDS
+     * @return SysOrgRoleResource
+     */
+    List<SysResource> getResourcesByRoles(List<String> roles);
 }

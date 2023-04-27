@@ -1,10 +1,15 @@
 package priv.onerice.ricenote.core.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 import priv.onerice.ricenote.core.entity.SysUserOrg;
 import priv.onerice.ricenote.core.mapper.SysUserOrgMapper;
 import priv.onerice.ricenote.core.service.ISysUserOrgService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +22,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysUserOrgServiceImpl extends ServiceImpl<SysUserOrgMapper, SysUserOrg> implements ISysUserOrgService {
 
+    @Override
+    public List<SysUserOrg> getOrgByUserId(String userId) {
+        if (StringUtils.isBlank(userId)) {
+            return new ArrayList<SysUserOrg>();
+        }
+        LambdaQueryWrapper<SysUserOrg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(true, SysUserOrg::getUserId, userId);
+        return getBaseMapper().selectList(queryWrapper);
+    }
 }

@@ -19,17 +19,17 @@ const modules = import.meta.glob('../views/**/**.vue')
 function loadRouter(menus) {
   for (const menu of menus) {
     //   type 为1 菜单组件
-    if (menu.type === 1 && menu.path !== '') {
-      const cnpPath = `../views/main${menu.component}`
+    if (menu.type === 1 && menu.router !== '') {
+      // const cnpPath = `../views/main${menu.component}`
 
       router.addRoute('main', {
-        path: menu.path,
+        path: menu.router,
         name: menu.name,
         // 映射取值
-        component: modules[/* @vite-ignore */ cnpPath],
-        meta: menu.meta
+        // component: modules[/* @vite-ignore */ cnpPath],
+        // meta: menu.meta
       })
-    } else if (menu.children) {
+    } else if (menu.type === 0 && menu.children) {
       loadRouter(menu.children)
     }
   }

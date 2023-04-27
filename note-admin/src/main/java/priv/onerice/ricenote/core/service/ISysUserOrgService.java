@@ -3,6 +3,8 @@ package priv.onerice.ricenote.core.service;
 import priv.onerice.ricenote.core.entity.SysUserOrg;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户组织表 服务类
@@ -12,5 +14,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-03-30
  */
 public interface ISysUserOrgService extends IService<SysUserOrg> {
-
+    /**
+     * 获取用户组织
+     *
+     * @param userId
+     * @return
+     */
+    List<SysUserOrg> getOrgByUserId(String userId);
 }

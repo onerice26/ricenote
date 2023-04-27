@@ -2,6 +2,7 @@ package priv.onerice.ricenote.core.service;
 
 import priv.onerice.ricenote.core.entity.SysOrgRolePermission;
 import com.baomidou.mybatisplus.extension.service.IService;
+import priv.onerice.ricenote.core.entity.SysPermission;
 
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface ISysOrgRolePermissionService extends IService<SysOrgRolePermiss
      * @param roles
      * @return
      */
-    List<SysOrgRolePermission> getPermissionsByRoles(List<String> roles);
+    List<SysPermission> getPermissionsByRoles(List<String> roles);
 }

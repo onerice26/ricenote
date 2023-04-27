@@ -18,12 +18,6 @@ export function getUserInfo(uid) {
   })
 }
 
-// 获取权限信息
-export function getMenus(rid) {
-  return request({
-    url: `/role/${rid}/menu`
-  })
-}
 
 // 修改用户信息
 export function selectRole(rid) {

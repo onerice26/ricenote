@@ -3,10 +3,11 @@ package priv.onerice.ricenote.core.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -47,6 +48,11 @@ public class SysUser implements Serializable {
      * 用户昵称
      */
     private String nickName;
+
+    /**
+     * 用户当前组织，默认组织
+     */
+    private String orgId;
 
     /**
      * 创建人编号

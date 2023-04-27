@@ -1,7 +1,10 @@
 package priv.onerice.ricenote.core.service;
 
-import priv.onerice.ricenote.core.entity.SysOrgRoleResource;
 import com.baomidou.mybatisplus.extension.service.IService;
+import priv.onerice.ricenote.core.entity.SysOrgRoleResource;
+import priv.onerice.ricenote.core.entity.SysResource;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-03-30
  */
 public interface ISysOrgRoleResourceService extends IService<SysOrgRoleResource> {
-
+    /**
+     *
+     * @param roles
+     * @return
+     */
+    List<SysResource> getResourcesByRoles(List<String> roles);
 }

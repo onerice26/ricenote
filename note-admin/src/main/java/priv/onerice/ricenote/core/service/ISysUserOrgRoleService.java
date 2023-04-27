@@ -1,6 +1,7 @@
 package priv.onerice.ricenote.core.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import priv.onerice.ricenote.core.entity.SysOrgRole;
 import priv.onerice.ricenote.core.entity.SysUserOrgRole;
 
 import java.util.List;
@@ -21,5 +22,14 @@ public interface ISysUserOrgRoleService extends IService<SysUserOrgRole> {
      * @param userId 用户ID
      * @return list
      */
-    List<SysUserOrgRole> getRoleByUserId(String userId);
+    List<SysUserOrgRole> getOrgRoleByUserId(String userId);
+
+    /**
+     * 通过用户ID查询角色信息
+     *
+     * @param userId 用户ID
+     * @param orgId  组织ID
+     * @return list
+     */
+    List<SysOrgRole> getRoleByUserIdAndOrgId(String userId, String orgId);
 }

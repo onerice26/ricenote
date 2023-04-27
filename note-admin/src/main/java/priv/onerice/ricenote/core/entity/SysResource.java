@@ -3,10 +3,11 @@ package priv.onerice.ricenote.core.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -34,6 +35,11 @@ public class SysResource implements Serializable {
     private String name;
 
     /**
+     * 菜单图标
+     */
+    private String icon;
+
+    /**
      * 资源类型 0菜单目录，1菜单资源，2外链
      */
     private String type;
@@ -46,7 +52,7 @@ public class SysResource implements Serializable {
     /**
      * 父类ID
      */
-    private Long parentId;
+    private String parentId;
 
     /**
      * 创建人编号
