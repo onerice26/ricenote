@@ -1,5 +1,6 @@
 package priv.onerice.ricenote.core.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import priv.onerice.ricenote.core.entity.SysOrgRolePermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import priv.onerice.ricenote.core.entity.SysPermission;
@@ -20,5 +21,5 @@ public interface SysOrgRolePermissionMapper extends BaseMapper<SysOrgRolePermiss
      * @param roles 角色IDS
      * @return SysPermission
      */
-    List<SysPermission> getPermissionsByRoles(List<String> roles);
+    List<SysPermission> getPermissionsByRoles(@Param("roles") List<String> roles);
 }

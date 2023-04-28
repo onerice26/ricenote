@@ -32,7 +32,7 @@ public class SysUser implements Serializable {
     /**
      * 用户账号
      */
-    private String account;
+    private String username;
 
     /**
      * 用户密码

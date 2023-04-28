@@ -8,11 +8,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import priv.onerice.ricenote.base.Result;
 import priv.onerice.ricenote.base.vo.MenuVo;
+import priv.onerice.ricenote.core.dto.SysUserDTO;
 import priv.onerice.ricenote.core.entity.SysOrgRole;
 import priv.onerice.ricenote.core.entity.SysResource;
 import priv.onerice.ricenote.core.entity.SysUser;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
  * @since 2023-03-30
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/sys/user")
 @Api(tags = "用户数据")
 public class SysUserController {
 
@@ -45,11 +46,18 @@ public class SysUserController {
     @Autowired
     private ISysOrgRoleResourceService orgRoleResourceService;
 
-    @GetMapping("/{id}")
-    @ApiOperation(value = "用户首页信息", notes = "用户信息")
-    public Result getUserInfo(@PathVariable("id") String id) {
+    @GetMapping("/list")
+    @ApiOperation(value = "用户列表查询", notes = "用户数据")
+    public Result getPageListInfo(@RequestBody SysUserDTO sysUserDTO) {
+        return Result.success();
+    }
+
+    @GetMapping("/info")
+    @ApiOperation(value = "用户首页信息", notes = "用户数据")
+    public Result getUserInfo() {
+        String loginId = StpUtil.getLoginIdAsString();
         JSONObject ret = new JSONObject();
-        SysUser info = userService.getById(id);
+        SysUser info = userService.getById(loginId);
         info.setPassword(null);
         info.setSalt(null);
         ret.put("userInfo", info);
@@ -69,7 +77,8 @@ public class SysUserController {
         ret.put("roleList", rootMenu);
         // 用户权限：按钮权限
         List<String> permissionList = StpUtil.getPermissionList();
-        ret.put("permissionList", permissionList);
+        ret.put("permissions", permissionList);
+        ret.put("userInfo", info);
         return Result.success(ret);
     }
 

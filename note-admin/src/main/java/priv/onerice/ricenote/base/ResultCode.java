@@ -22,7 +22,7 @@ public enum ResultCode {
     // 用户错误
     USER_NOT_TOKEN(2000, "token失效"),
     USER_NOT_LOGIN(2001, "用户未登录"),
-    USER_ACCOUNT_PASSWORD_ERROE(2002, "账号或密码错误"),
+    USER_USERNAME_PASSWORD_ERROE(2002, "账号或密码错误"),
 
     /* 业务错误 */
     NO_PERMISSION(3001, "没有权限");

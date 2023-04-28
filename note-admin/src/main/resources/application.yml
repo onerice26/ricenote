@@ -18,7 +18,7 @@ spring:
         master:
           url: jdbc:mysql://localhost:3306/rice_note?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true&autoReconnect=true
           username: root
-          password: root # root root123 #
+          password: root123 # root root123 #
           driver-class-name: com.mysql.cj.jdbc.Driver
       druid:
         initial-size: 5
@@ -83,7 +83,7 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-    password: 'Redis000' # Redis000 000415
+    password: '000415' # Redis000 000415
     connect-timeout: 5000ms
     database: 0
     lettuce:
@@ -108,7 +108,7 @@ mybatis-plus:
 ############## Sa-Token ##############
 sa-token:
   # token名称 (同时也是cookie名称)
-  token-name: ricenote
+  token-name: Authorization
   # token 前缀
   token-prefix: onerice
   # token有效期，单位s 默认30天, -1代表永不过期
@@ -125,3 +125,9 @@ sa-token:
   is-log: false
   # jwt-key
   jwt-secret-key: 3c8bdf976f3c30bd9467cb2d7835a1d2589404905DF3E7BE192966710D5038B5FFE0ADDEB61402E9225B0A28F00A66D8
+############## 自定义 ##############
+rice:
+  encrypt:
+    rsa:
+      priv-key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCfEbRCKONihXNeaCmcG0oNZFwwcsj1YPeCIsmYZjYSpGPrRLcTfcHxIsvQsmRPfpiqzc2VzL/UwOR1934uYTdLarwPEboYXacKOzdY/zei9aab2yaEaTXIHjQ7VBdu6eWUSjwPdS031dvfbI6OxCvecOEpOlTpoQEIaNojg9MVNxKCNHJBum69M59NmM2J3LMk0kZ34QUcCA+rKnM79zM5oPYWNo7ldnq3r/xYVFIzga1ZWwZgjZZaSWwZKFH5rVdtVYiWLvmzdBs6T9HZerWhimccDHD0RdBgU/uR7Jdzsj3Jb9GZG0w3bW7wmxWi841omx0vPOkdN6y1L38Pnv7pAgMBAAECggEAev/Blvbu/JucXf/FTQR8+mYEMyJO6g6U1Hf50nIWlcuvx5hWyCeR89eoKjQHBMErY8fHlHHCU8zj26QIWeyqSRK7YBug/n5MT8kCPzr51nSE5DdNTU3dXGSeltGrXQRXlZbhYkKFOIuRfO4APbzK/zHhqXOFfTIWDl6lbpjce6XfNenAMuNxvPvkumDowGEnzh5Mv1oO+D09RD8PdmgJTH3kiF0BbTL5VpC+vyNXowrk05Q+aLKIsOQtZ62QXCXAVVFDRGqMqXgHaTbopL6mkQJsna7qMq/kliN388LtXCIb5vRRzkA5FEoNt3j+jrmICKOzP6CX23cZY8T5PXCxQQKBgQD4iAfSQLYYEguLcZhFeHrnLGBbgpEFmY9TaxFysJ6Ygn27WMtEwkH12ViVNY3MPyVgaZKsL0OoguL2YS2dm4tgDXGJy3ae+GLHn96NWL4wX5pIcs2u3JRBOJhSHKXFM1uHhkjT2ZCDuuZjS24NrH+ANdxYCh0ndNhr6B9CmE9/fQKBgQCj2W83SgF3TOdd4rkA+pls1yyIivMtL4WJ8rlij2PXQJagFfpN57Gv9jxMhimFx+SOQLSZqEgp//3G6Qvw1ojL2pQItHaYlWs+Dnp49iQ5r5M4i6UBVO4KtaUpRSEmcAeKoWVOHi44GzIbLTHE+oOyqSiNo+wrzcKLiBDBqDiw3QKBgCBzOno0YtI/wOwjF9uyQHHgtHAeWysdAr7EkxGjiAGnwBzvGhNPPeeIym0pAeuyLwIoprL+tNnSxSmgRKF4hrky6CkyvLlC+zrPX/KarLKKOQ3Ol5aGTIE7j3/hJ6/Y5dGLMgUfOiRJCf3bAnKcnEU0QyHnqCjXs85bD4HVe0PNAoGBAJiObvrvsQW/WP0ViGPc8NViU1ie52R/Brs2gF3AXJmizZwoWnIG9G59ug8WK7sgLzI0FPOst+RDMarueeu4FI6Z6ZNhU7smBEA3gtj1dS0wyMaxXuUqiqj2D92pPABp9tuhAo4Fk8sxpymenuRkzBKhZdzbb54paqY3/kIRuxcRAoGAY8XLKU4TkbcfM70HSonTgIEK+olJ5f4IRGmKXIJlE9FUHH2uA3zsXr1h/scsmeS4gmyJ5niPxHec/Ck/awoq0Wb1yV7kDTRO87MVqKC78nZswb6hrehfhewX7WAhITZid2Xbl+dJXfV8w+Llso88OjZG67ToHHb5nygKRe0y2AU=
+      pub-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnxG0QijjYoVzXmgpnBtKDWRcMHLI9WD3giLJmGY2EqRj60S3E33B8SLL0LJkT36Yqs3Nlcy/1MDkdfd+LmE3S2q8DxG6GF2nCjs3WP83ovWmm9smhGk1yB40O1QXbunllEo8D3UtN9Xb32yOjsQr3nDhKTpU6aEBCGjaI4PTFTcSgjRyQbpuvTOfTZjNidyzJNJGd+EFHAgPqypzO/czOaD2FjaO5XZ6t6/8WFRSM4GtWVsGYI2WWklsGShR+a1XbVWIli75s3QbOk/R2Xq1oYpnHAxw9EXQYFP7keyXc7I9yW/RmRtMN21u8JsVovONaJsdLzzpHTestS9/D57+6QIDAQAB

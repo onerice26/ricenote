@@ -28,16 +28,16 @@ public class Result<T> implements Serializable {
     /**
      * 响应结果
      */
-    private T data;
+    private T result;
 
     public Result() {
     }
 
-    public Result(boolean success, Integer code, String message, T data) {
+    public Result(boolean success, Integer code, String message, T result) {
         this.success = success;
         this.code = code;
         this.message = message;
-        this.data = data;
+        this.result = result;
     }
 
     /**

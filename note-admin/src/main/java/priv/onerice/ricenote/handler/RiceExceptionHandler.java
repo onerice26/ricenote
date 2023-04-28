@@ -1,5 +1,6 @@
 package priv.onerice.ricenote.handler;
 
+import cn.dev33.satoken.exception.SaTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,9 +29,23 @@ public class RiceExceptionHandler {
      */
     @ExceptionHandler(value = RiceException.class)
     @ResponseBody
-    public Result bizExceptionHandler(HttpServletRequest req, RiceException e) {
+    public Result OnericeExceptionHandler(HttpServletRequest req, RiceException e) {
         log.error("发生业务异常！原因是：{}", e.getErrorMsg());
         return Result.failed(e.getErrorCode(), e.getErrorMsg());
+    }
+
+    /**
+     * 处理自定义的业务异常
+     *
+     * @param req
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = SaTokenException.class)
+    @ResponseBody
+    public Result SaTokenExceptionHandler(HttpServletRequest req, SaTokenException e) {
+        log.error("发生业务异常！原因是：{}", e.getMessage());
+        return Result.failed(ResultCode.COMMON_FAIL.getCode(), e.getMessage());
     }
 
     /**
